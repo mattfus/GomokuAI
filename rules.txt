@@ -1,0 +1,154 @@
+#show BestMove/2.
+EmptyCell(X,Y) | FilledCell(X,Y) :- Cell(X,Y,0).
+
+%%%%%%%%%%%%%%%%
+%%%  PLAYER  %%%
+%%%%%%%%%%%%%%%%
+
+%PLAYER WINNING HORIZONTAL CASES
+%CASO °***°
+PlayerWinningHoriz(X,Y):- Cell(A,B,2),Cell(A,B1,2),Cell(A,B2,2),Cell(X,Y,0),B1=B+1, B2=B1+1,Y=B2+1, X=A.
+PlayerWinningHoriz(X,Y):- Cell(A,B,2),Cell(A,B1,2),Cell(A,B2,2),Cell(X,Y,0),B1=B-1, B2=B1-1,Y=B2-1, X=A.
+%CASO ****° e °****
+PlayerWinningHoriz(X,Y):- Cell(A,B,2),Cell(A,B1,2),Cell(A,B2,2),Cell(A,B3,2), Cell(X,Y,0), B1=B+1, B2=B1+1, B3=B2+1, Y=B3+1, X=A.
+PlayerWinningHoriz(X,Y):- Cell(X,Y,0),Cell(A,B,2),Cell(A,B1,2),Cell(A,B2,2),Cell(A,B3,2), Y=B-1, B=B1-1, B1=B2-1, B2=B3-1,X=A.
+%CASO ***°* e *°***
+PlayerWinningHoriz(X,Y):- Cell(A,B,2),Cell(A,B1,2),Cell(A,B2,2),Cell(X,Y,0),Cell(A,B3,2), B1=B+1, B2=B1+1, B3=Y+1, Y=B2+1, X=A. 
+PlayerWinningHoriz(X,Y):- Cell(A,B,2),Cell(X,Y,0),Cell(A,B1,2),Cell(A,B2,2),Cell(A,B3,2), B1=Y+1, B2=B1+1, B3=B2+1, Y=B+1, X=A.
+%CASO **°**
+PlayerWinningHoriz(X,Y):- Cell(A,B,2),Cell(A,B1,2),Cell(X,Y,0),Cell(A,B2,2), Cell(A,B3,2), B1=B+1, Y=B1+1, B2=Y+1, B3=B2+1, X=A.
+
+%PLAYER WINNING VERTICAL CASES
+%CASO °***°
+PlayerWinningVert(X,Y):- Cell(A,B,2), Cell(A1,B,2),Cell(A2,B,2),Cell(X,Y,0),A1=A+1, A2=A1+1,X=A2+1, Y=B.
+PlayerWinningVert(X,Y):- Cell(A,B,2), Cell(A1,B,2),Cell(A2,B,2),Cell(X,Y,0),A1=A-1, A2=A1-1,X=A2-1, Y=B.
+%CASO ****° e °****
+PlayerWinningVert(X,Y):- Cell(A,B,2), Cell(A1,B,2),Cell(A2,B,2),Cell(A3,B,2), Cell(X,Y,0), A1=A+1, A2=A1+1, A3=A2+1, X=A3+1, Y=B.
+PlayerWinningVert(X,Y):- Cell(X,Y,0),Cell(A,B,2),Cell(A1,B,2),Cell(A2,B,2),Cell(A3,B,2), X=A-1, A=A1-1, A1=A2-1, A2=A3-1,Y=B.
+%CASO ***°* e *°***
+PlayerWinningVert(X,Y):- Cell(A,B,2), Cell(A1,B,2),Cell(A2,B,2),Cell(X,Y,0),Cell(A3,B,2), A1=A+1, A2=A1+1, A3=X+1, X=A2+1, Y=B.
+PlayerWinningVert(X,Y):- Cell(A,B,2), Cell(A1,B,2),Cell(A2,B,2),Cell(X,Y,0),Cell(A3,B,2), A1=X+1, A2=A1+1, A3=2+1, X=A+1, Y=B.
+%CASO **°**
+PlayerWinningVert(X,Y):- Cell(A,B,2), Cell(A1,B,2),Cell(X,Y,0),Cell(A2,B,2), Cell(A3,B,2), A1=A+1, X=A1+1, A2=X+1, A3=A2+1, Y=B.
+
+%PLAYER WINNING OBLIQUE CASES
+%CASO °***° sulle diagonali
+PlayerWinningObl(X,Y):- Cell(A,B,2),Cell(A1,B1,2),Cell(A2,B2,2),Cell(X,Y,0), A1=A+1, B1=B+1, A2=A1+1, B2=B1+1, X=A2+1, Y=B2+1.
+PlayerWinningObl(X,Y):- Cell(A,B,2),Cell(A1,B1,2),Cell(A2,B2,2),Cell(X,Y,0), A1=A-1, B1=B-1, A2=A1-1, B2=B1-1, X=A2-1, Y=B2-1.
+PlayerWinningObl(X,Y):- Cell(A,B,2),Cell(A1,B1,2),Cell(A2,B2,2),Cell(X,Y,0), A1=A+1, B1=B-1, A2=A1+1, B2=B1-1, X=A2+1, Y=B2-1.
+PlayerWinningObl(X,Y):- Cell(A,B,2),Cell(A1,B1,2),Cell(A2,B2,2),Cell(X,Y,0), A1=A-1, B1=B+1, A2=A1-1, B2=B1+1, X=A2-1, Y=B2+1.
+%CASO ****° e °****
+PlayerWinningObl(X,Y):- Cell(A,B,2),Cell(A1,B1,2),Cell(A2,B2,2),Cell(A3,B3,2), Cell(X,Y,0), A1=A+1, B1=B+1, A2=A1+1, B2=B1+1, A3=A2+1, B3=B2+1, X=A3+1, Y=B3+1.
+PlayerWinningObl(X,Y):- Cell(A,B,2),Cell(A1,B1,2),Cell(A2,B2,2),Cell(A3,B3,2), Cell(X,Y,0), A1=A-1, B1=B-1, A2=A1-1, B2=B1-1, A3=A2-1, B3=B2-1, X=A3-1, Y=B3-1.
+PlayerWinningObl(X,Y):- Cell(A,B,2),Cell(A1,B1,2),Cell(A2,B2,2),Cell(A3,B3,2), Cell(X,Y,0), A1=A+1, B1=B-1, A2=A1+1, B2=B1-1, A3=A2+1, B3=B2-1, X=A3+1, Y=B3-1.
+PlayerWinningObl(X,Y):- Cell(A,B,2),Cell(A1,B1,2),Cell(A2,B2,2),Cell(A3,B3,2), Cell(X,Y,0), A1=A-1, B1=B+1, A2=A1-1, B2=B1+1, A3=A2-1, B3=B2+1, X=A3-1, Y=B3+1.
+%CASO ***°* e *°*** sulle diagonali
+PlayerWinningObl(X,Y):- Cell(A,B,2),Cell(A1,B1,2),Cell(A2,B2,2),Cell(X,Y,0),Cell(A3,B3,2), A1=A-1, B1=B+1, A2=A1-1, B2=B1+1, X=A2-1, Y=B2+1, A3=X-1, B3=Y+1.
+PlayerWinningObl(X,Y):- Cell(A,B,2),Cell(A1,B1,2),Cell(A2,B2,2),Cell(X,Y,0),Cell(A3,B3,2), A1=A+1, B1=B-1, A2=A1+1, B2=B1-1, X=A2+1, Y=B2-1, A3=X+1, B3=Y-1.
+PlayerWinningObl(X,Y):- Cell(A,B,2),Cell(A1,B1,2),Cell(A2,B2,2),Cell(X,Y,0),Cell(A3,B3,2), A1=A+1, B1=B+1, A2=A1+1, B2=B1+1, X=A2+1, Y=B2+1, A3=X+1, B3=Y+1.
+PlayerWinningObl(X,Y):- Cell(A,B,2),Cell(A1,B1,2),Cell(A2,B2,2),Cell(X,Y,0),Cell(A3,B3,2), A1=A-1, B1=B-1, A2=A1-1, B2=B1-1, X=A2-1, Y=B2-1, A3=X-1, B3=Y-1.
+%CASO **°** sulle diagonali
+PlayerWinningObl(X,Y):- Cell(A,B,2),Cell(A1,B1,2),Cell(X,Y,0),Cell(A2,B2,2), Cell(A3,B3,2), A1=A+1, B1=B+1, X=A1+1, Y=B1+1, A2=X+1, B2=Y+1, A3=A2+1, B3=B2+1.
+PlayerWinningObl(X,Y):- Cell(A,B,2),Cell(A1,B1,2),Cell(X,Y,0),Cell(A2,B2,2), Cell(A3,B3,2), A1=A-1, B1=B+1, X=A1-1, Y=B1+1, A2=X-1, B2=Y+1, A3=A2-1, B3=B2+1.
+
+%%%%%%%%%%%%
+%%%  IA  %%%
+%%%%%%%%%%%%
+
+%IA WINNING HORIZONTAL CASES
+%CASO °***°
+IAWinningHoriz(X,Y):- Cell(A,B,1), Cell(A,B1,1),Cell(A,B2,1),Cell(X,Y,0), B1=B+1, B2=B1+1, Y=B1+1, X=A.
+IAWinningHoriz(X,Y):- Cell(A,B,1),Cell(A,B1,1),Cell(A,B2,1),Cell(X,Y,0), B1=B-1, B2=B1-1, Y=B1-1, X=A.
+%CASO ****° e °****
+IAWinningHoriz(X,Y):- Cell(A,B,2),Cell(A,B1,2),Cell(A,B2,2),Cell(A,B3,2), Cell(X,Y,0), B1=B+1, B2=B1+1, B3=B2+1, Y=B3+1, X=A.
+IAWinningHoriz(X,Y):- Cell(X,Y,0),Cell(A,B,2),Cell(A,B1,2),Cell(A,B2,2),Cell(A,B3,2), Y=B-1, B=B1-1, B1=B2-1, B2=B3-1,X=A.
+%CASO ***°* e *°***
+IAWinningHoriz(X,Y):- Cell(A,B,1),Cell(A,B1,1),Cell(A,B2,1),Cell(X,Y,0),Cell(A,B3,1), B1=B+1, B2=B1+1, B3=Y+1, Y=B2+1, X=A. 
+IAWinningHoriz(X,Y):- Cell(A,B,1),Cell(X,Y,0),Cell(A,B1,1),Cell(A,B2,1),Cell(A,B3,1), B1=Y+1, B2=B1+1, B3=B2+1, Y=B+1, X=A.
+%CASO **°**
+IAWinningHoriz(X,Y):- Cell(A,B,1),Cell(A,B1,1),Cell(X,Y,0),Cell(A,B2,1), Cell(A,B3,1), B1=B+1, Y=B1+1, B2=Y+1, B3=B2+1, X=A.
+
+%IA WINNING VERTICAL CASES
+%CASO °***°
+IAWinningVert(X,Y):- Cell(A,B,1), Cell(A1,B,1),Cell(A2,B,1),Cell(X,Y,0),A1=A+1, A2=A1+1,X=A2+1, Y=B.
+IAWinningVert(X,Y):- Cell(A,B,1), Cell(A1,B,1),Cell(A2,B,1),Cell(X,Y,0),A1=A-1, A2=A1-1,X=A2-1, Y=B.
+%CASO ****° e °****
+IAWinningVert(X,Y):- Cell(A,B,2), Cell(A1,B,2),Cell(A2,B,2),Cell(A3,B,2), Cell(X,Y,0), A1=A+1, A2=A1+1, A3=A2+1, X=A3+1, Y=B.
+IAWinningVert(X,Y):- Cell(X,Y,0),Cell(A,B,2),Cell(A1,B,2),Cell(A2,B,2),Cell(A3,B,2), X=A-1, A=A1-1, A1=A2-1, A2=A3-1,Y=B.
+%CASO ***°* e *°***
+IAWinningVert(X,Y):- Cell(A,B,1), Cell(A1,B,1),Cell(A2,B,1),Cell(X,Y,0),Cell(A3,B,1), A1=A+1, A2=A1+1, A3=X+1, X=A2+1, Y=B.
+IAWinningVert(X,Y):- Cell(A,B,1), Cell(A1,B,1),Cell(A2,B,1),Cell(X,Y,0),Cell(A3,B,1), A1=X+1, A2=A1+1, A3=2+1, X=A+1, Y=B.
+%CASO **°**
+IAWinningVert(X,Y):- Cell(A,B,1), Cell(A1,B,1),Cell(X,Y,0),Cell(A2,B,1), Cell(A3,B,1), A1=A+1, X=A1+1, A2=X+1, A3=A2+1, Y=B.
+
+%IA WINNING OBLIQUE CASES
+%CASO °***° sulle diagonali
+IAWinningObl(X,Y):- Cell(A,B,1),Cell(A1,B1,1),Cell(A2,B2,1),Cell(X,Y,0), A1=A+1, B1=B+1, A2=A1+1, B2=B1+1, X=A2+1, Y=B2+1.
+IAWinningObl(X,Y):- Cell(A,B,1),Cell(A1,B1,1),Cell(A2,B2,1),Cell(X,Y,0), A1=A-1, B1=B-1, A2=A1-1, B2=B1-1, X=A2-1, Y=B2-1.
+IAWinningObl(X,Y):- Cell(A,B,1),Cell(A1,B1,1),Cell(A2,B2,1),Cell(X,Y,0), A1=A+1, B1=B-1, A2=A1+1, B2=B1-1, X=A2+1, Y=B2-1.
+IAWinningObl(X,Y):- Cell(A,B,1),Cell(A1,B1,1),Cell(A2,B2,1),Cell(X,Y,0), A1=A-1, B1=B+1, A2=A1-1, B2=B1+1, X=A2-1, Y=B2+1.
+%CASO ****° e °****
+IAWinningObl(X,Y):- Cell(A,B,2),Cell(A1,B1,2),Cell(A2,B2,2),Cell(A3,B3,2), Cell(X,Y,0), A1=A+1, B1=B+1, A2=A1+1, B2=B1+1, A3=A2+1, B3=B2+1, X=A3+1, Y=B3+1.
+IAWinningObl(X,Y):- Cell(A,B,2),Cell(A1,B1,2),Cell(A2,B2,2),Cell(A3,B3,2), Cell(X,Y,0), A1=A-1, B1=B-1, A2=A1-1, B2=B1-1, A3=A2-1, B3=B2-1, X=A3-1, Y=B3-1.
+IAWinningObl(X,Y):- Cell(A,B,2),Cell(A1,B1,2),Cell(A2,B2,2),Cell(A3,B3,2), Cell(X,Y,0), A1=A+1, B1=B-1, A2=A1+1, B2=B1-1, A3=A2+1, B3=B2-1, X=A3+1, Y=B3-1.
+IAWinningObl(X,Y):- Cell(A,B,2),Cell(A1,B1,2),Cell(A2,B2,2),Cell(A3,B3,2), Cell(X,Y,0), A1=A-1, B1=B+1, A2=A1-1, B2=B1+1, A3=A2-1, B3=B2+1, X=A3-1, Y=B3+1.
+%CASO ***°* e *°*** sulle diagonali
+IAWinningObl(X,Y):- Cell(A,B,1),Cell(A1,B1,1),Cell(A2,B2,1),Cell(X,Y,0),Cell(A3,B3,1), A1=A-1, B1=B+1, A2=A1-1, B2=B1+1, X=A2-1, Y=B2+1, A3=X-1, B3=Y+1.
+IAWinningObl(X,Y):- Cell(A,B,1),Cell(A1,B1,1),Cell(A2,B2,1),Cell(X,Y,0),Cell(A3,B3,1), A1=A+1, B1=B-1, A2=A1+1, B2=B1-1, X=A2+1, Y=B2-1, A3=X+1, B3=Y-1.
+IAWinningObl(X,Y):- Cell(A,B,1),Cell(A1,B1,1),Cell(A2,B2,1),Cell(X,Y,0),Cell(A3,B3,1), A1=A+1, B1=B+1, A2=A1+1, B2=B1+1, X=A2+1, Y=B2+1, A3=X+1, B3=Y+1.
+IAWinningObl(X,Y):- Cell(A,B,1),Cell(A1,B1,1),Cell(A2,B2,1),Cell(X,Y,0),Cell(A3,B3,1), A1=A-1, B1=B-1, A2=A1-1, B2=B1-1, X=A2-1, Y=B2-1, A3=X-1, B3=Y-1.
+%CASO **°** sulle diagonali
+IAWinningObl(X,Y):- Cell(A,B,1),Cell(A1,B1,1),Cell(X,Y,0),Cell(A2,B2,1), Cell(A3,B3,1), A1=A+1, B1=B+1, X=A1+1, Y=B1+1, A2=X+1, B2=Y+1, A3=A2+1, B3=B2+1.
+IAWinningObl(X,Y):- Cell(A,B,1),Cell(A1,B1,1),Cell(X,Y,0),Cell(A2,B2,1), Cell(A3,B3,1), A1=A-1, B1=B+1, X=A1-1, Y=B1+1, A2=X-1, B2=Y+1, A3=A2-1, B3=B2+1.
+
+
+%Solo una mossa
+:- #count{X,Y : FilledCell(X,Y)} != 1.
+
+%Non vorrei che il centro fosse libero
+:~ not FilledCell(9,9), Cell(9,9,0). [1@1]
+:~ not FilledCell(9,8), Cell(9,8,0). [1@1]
+:~ not FilledCell(8,8), Cell(8,8,0). [1@1]
+:~ not FilledCell(8,9), Cell(8,9,0). [1@1]
+:~ not FilledCell(8,10), Cell(8,10,0). [1@1]
+:~ not FilledCell(9,10), Cell(9,10,0). [1@1]
+:~ not FilledCell(10,10), Cell(10,10,0). [1@1]
+:~ not FilledCell(10,9), Cell(10,9,0). [1@1]
+:~ not FilledCell(10,8), Cell(10,8,0). [1@1]
+
+%Se c'è una cella piena la metto vicina.
+:~ not FilledCell(X,Y), Cell(X1,Y1,1), Cell(X,Y,0), X=X1, Y=Y1-1. [1@2]
+:~ not FilledCell(X,Y), Cell(X1,Y1,1), Cell(X,Y,0), X=X1-1, Y=Y1-1. [1@2]
+:~ not FilledCell(X,Y), Cell(X1,Y1,1), Cell(X,Y,0), X=X1-1, Y=Y1. [1@2]
+:~ not FilledCell(X,Y), Cell(X1,Y1,1), Cell(X,Y,0), X=X1-1, Y=Y1+1. [1@2]
+:~ not FilledCell(X,Y), Cell(X1,Y1,1), Cell(X,Y,0), X=X1, Y=Y1+1. [1@2]
+:~ not FilledCell(X,Y), Cell(X1,Y1,1), Cell(X,Y,0), X=X1+1, Y=Y1+1. [1@2]
+:~ not FilledCell(X,Y), Cell(X1,Y1,1), Cell(X,Y,0), X=X1+1, Y=Y1. [1@2]
+:~ not FilledCell(X,Y), Cell(X1,Y1,1), Cell(X,Y,0), X=X1+1, Y=Y1-1. [1@2]
+
+%Se ci sono due celle piene allora metto la terza
+%HORIZONTAL
+:~ not FilledCell(X,Y), Cell(X,Y1,1), Cell(X,Y2,1), Y2=Y1+1, Y=Y2+1. [1@3]
+:~ not FilledCell(X,Y), Cell(X,Y1,1), Cell(X,Y2,1), Y2=Y1-1, Y=Y1-1. [1@3]
+
+%VERTICAL
+:~ not FilledCell(X,Y), Cell(X1,Y,1), Cell(X2,Y,1), X2=X1+1, X=X2+1. [1@3]
+:~ not FilledCell(X,Y), Cell(X1,Y,1), Cell(X2,Y,1), X2=X1-1, X=X2-1. [1@3]
+
+%OBLIQUE
+:~ not FilledCell(X,Y), Cell(X1,Y1,1), Cell(X2,Y2,1), X2=X1+1, Y2=Y1+1, X=X2+1, Y=Y2+1. [1@3]
+:~ not FilledCell(X,Y), Cell(X1,Y1,1), Cell(X2,Y2,1), X2=X1-1, Y2=Y1-1, X=X2-1, Y=Y2-1. [1@3]
+:~ not FilledCell(X,Y), Cell(X1,Y1,1), Cell(X2,Y2,1), X2=X1+1, Y2=Y1-1, X=X2+1, Y=Y2-1. [1@3]
+:~ not FilledCell(X,Y), Cell(X1,Y1,1), Cell(X2,Y2,1), X2=X1-1, Y2=Y1+1, X=X2-1, Y=Y2+1. [1@3]
+
+%Se Player sta vincendo bloccalo
+:~ not FilledCell(X,Y), PlayerWinningHoriz(X,Y). [1@4]
+:~ not FilledCell(X,Y), PlayerWinningVert(X,Y). [1@4]
+:~ not FilledCell(X,Y), PlayerWinningObl(X,Y). [1@4]
+
+%Se IA sta vincendo allora vinci
+:~ not FilledCell(X,Y), IAWinningHoriz(X,Y). [1@5]
+:~ not FilledCell(X,Y), IAWinningObl(X,Y). [1@5]
+:~ not FilledCell(X,Y), IAWinningVert(X,Y). [1@5]
+
+BestMove(X,Y):- FilledCell(X,Y).
